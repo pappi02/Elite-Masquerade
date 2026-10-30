@@ -1,0 +1,197 @@
+@import "tailwindcss";
+
+@theme {
+  /* Lacquer blacks */
+  --color-onyx: #070605;
+  --color-lacquer: #0d0a09;
+  --color-smoke: #17110f;
+  --color-ash: #251c18;
+  /* Antique gold */
+  --color-gold: #c9a14a;
+  --color-gold-bright: #f0d48a;
+  --color-gold-deep: #8f6b26;
+  --color-gold-dim: #6b5530;
+  /* Velvet reds */
+  --color-velvet: #5c0a14;
+  --color-crimson: #8e0f1d;
+  --color-ruby: #c3162f;
+  /* Ivory text */
+  --color-ivory: #efe6d4;
+  --color-parchment: #b9ad97;
+  --color-muted: #847a69;
+
+  --font-display: var(--font-cinzel), "Trajan Pro", ui-serif, Georgia, serif;
+  --font-serif: var(--font-cormorant), ui-serif, Georgia, serif;
+  --font-sans: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
+
+  --ease-velvet: cubic-bezier(0.22, 1, 0.36, 1);
+
+  --animate-sheen: sheen 5s ease-in-out infinite;
+  --animate-drift: drift 18s ease-in-out infinite alternate;
+  --animate-twinkle: twinkle 3.4s ease-in-out infinite;
+  --animate-marquee: marquee var(--marquee-duration, 40s) linear infinite;
+  --animate-flicker: flicker 4s ease-in-out infinite;
+  --animate-orbit: spin 90s linear infinite;
+
+  @keyframes sheen {
+    0%,
+    55% {
+      background-position: 120% 0;
+    }
+    100% {
+      background-position: -40% 0;
+    }
+  }
+  @keyframes drift {
+    from {
+      transform: scale(1.04) translate3d(-1.5%, -1%, 0);
+    }
+    to {
+      transform: scale(1.12) translate3d(1.5%, 1.5%, 0);
+    }
+  }
+  @keyframes twinkle {
+    0%,
+    100% {
+      opacity: 0;
+      transform: scale(0.3);
+    }
+    50% {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+  @keyframes marquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+  @keyframes flicker {
+    0%,
+    100% {
+      opacity: 0.85;
+    }
+    45% {
+      opacity: 1;
+    }
+    60% {
+      opacity: 0.7;
+    }
+  }
+}
+
+@layer base {
+  html {
+    background: var(--color-onyx);
+    color-scheme: dark;
+  }
+  body {
+    background: var(--color-onyx);
+    color: var(--color-ivory);
+    font-family: var(--font-sans);
+    -webkit-tap-highlight-color: transparent;
+  }
+  ::selection {
+    background: var(--color-crimson);
+    color: var(--color-ivory);
+  }
+  :focus-visible {
+    outline: 1px solid var(--color-gold-bright);
+    outline-offset: 3px;
+  }
+}
+
+@layer components {
+  /* Engraved gold lettering with a slow passing sheen */
+  .gold-text {
+    background: linear-gradient(
+      100deg,
+      #8f6b26 0%,
+      #c9a14a 22%,
+      #f6e2a4 40%,
+      #c9a14a 52%,
+      #8f6b26 70%,
+      #d9b864 100%
+    );
+    background-size: 220% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .gold-text-live {
+    animation: var(--animate-sheen);
+  }
+
+  /* Small engraved label: "— VIP —" */
+  .eyebrow {
+    font-family: var(--font-display);
+    font-size: 0.66rem;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--color-gold);
+  }
+
+  .hairline {
+    background: linear-gradient(90deg, transparent, var(--color-gold-dim) 18%, var(--color-gold-dim) 82%, transparent);
+    height: 1px;
+  }
+
+  /* Deep velvet backdrop used behind heroes and panels */
+  .velvet {
+    background:
+      radial-gradient(120% 80% at 50% 0%, rgb(142 15 29 / 0.32), transparent 60%),
+      radial-gradient(90% 60% at 100% 100%, rgb(92 10 20 / 0.45), transparent 70%),
+      radial-gradient(70% 50% at 0% 80%, rgb(201 161 74 / 0.08), transparent 70%),
+      var(--color-lacquer);
+  }
+
+  .grain::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.07;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  .no-scrollbar {
+    scrollbar-width: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@keyframes digit {
+  from {
+    transform: translateY(-55%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes scrollcue {
+  from {
+    transform: translateY(-100%);
+  }
+  to {
+    transform: translateY(200%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
