@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { nav, site } from "@/lib/site";
 import { Filigree } from "@/components/ui/ornaments";
+import { SignOff } from "./sign-off";
 
 const more = [
   { href: "/faq", label: "Questions" },
@@ -67,6 +68,7 @@ export function Footer() {
         <div className="mt-6 flex flex-col items-center justify-between gap-3 text-[0.68rem] tracking-wide text-muted sm:flex-row">
           <p>© {new Date().getFullYear()} {site.name}. All rights reserved.</p>
           <p className="font-display uppercase tracking-[0.3em] text-gold/70">{site.tagline}</p>
+          <SignOff />
         </div>
       </div>
     </footer>
